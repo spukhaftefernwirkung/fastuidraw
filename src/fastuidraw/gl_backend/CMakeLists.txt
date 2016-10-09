@@ -19,7 +19,7 @@ foreach(GL_FLAVOR ${GL_FLAVORS_TO_BUILD})
   # Building gl_blackend{GL,GLES} requires the generated ngl_{gl,gles}.hpp header file to be built.
   # And that happens in the ngl_{GL,GLES} target.
   add_dependencies(gl_backend${GL_FLAVOR} ngl_${GL_FLAVOR})
-  target_compile_definitions(gl_backend${GL_FLAVOR} PUBLIC ${FASTUIDRAW${GL_FLAVOR}_COMPILE_DEFINES_DEBUG})
+  target_compile_definitions(gl_backend${GL_FLAVOR} PUBLIC ${FASTUIDRAW${GL_FLAVOR}_COMPILE_DEFINITIONS})
   mark_private_sources_as_private(gl_backend${GL_FLAVOR})
   target_include_directories(gl_backend${GL_FLAVOR} PUBLIC ../../../inc)
   set_target_properties(gl_backend${GL_FLAVOR} PROPERTIES POSITION_INDEPENDENT_CODE ON)
