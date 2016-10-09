@@ -1,0 +1,20 @@
+# add_shader_resources(<TARGET> <SHADER_RESOURCES_CPP_VAR> [ RESOURCE1 .. RESOURCEN ])
+#  RESOURCE1 .. RESOURCEN Paths of the *.resource_string files relative to ${CMAKE_CURRENT_LIST_DIR}.
+function(add_shader_resources TARGET SHADER_RESOURCES_CPP_VAR ...)
+  set(SHADER_RESOURCES_CPP)
+  foreach(SHADER_RESOURCE ${ARGV2} ${ARGN})
+    set(SHADER_RESOURCE_CPP ${CMAKE_CURRENT_BINARY_DIR}/${SHADER_RESOURCE}.cpp)
+    get_filename_component(SHADER_RESOURCE_SUBDIR ${SHADER_RESOURCE} DIRECTORY)
+    get_filename_component(SHADER_RESOURCE_NAME ${SHADER_RESOURCE} NAME)
+    add_custom_command(
+      OUTPUT ${SHADER_RESOURCE_CPP}
+      COMMAND ${CMAKE_SOURCE_DIR}/shell_scripts/fastuidraw-create-resource-cpp-file.sh ${CMAKE_CURRENT_LIST_DIR}/${SHADER_RESOURCE} ${SHADER_RESOURCE_NAME} ${CMAKE_CURRENT_BINARY_DIR}/${SHADER_RESOURCE_SUBDIR}
+    )
+    list(APPEND SHADER_RESOURCES_CPP ${SHADER_RESOURCE_CPP})
+    set_source_files_properties(${SHADER_RESOURCE_CPP} PROPERTIES GENERATED TRUE)
+  endforeach()
+  add_custom_target(${TARGET} DEPENDS ${SHADER_RESOURCES_CPP})
+
+  set(${SHADER_RESOURCES_CPP_VAR} ${SHADER_RESOURCES_CPP} PARENT_SCOPE)
+endfunction()
+
