@@ -16,7 +16,9 @@ add_shader_resources(gl_backend-shader-resources SHARER_RESOURCES_CPP ${SHADER_R
 foreach(GL_FLAVOR ${GL_FLAVORS_TO_BUILD})
   add_library(gl_backend${GL_FLAVOR} OBJECT ${SOURCES} ${SHARER_RESOURCES_CPP})
   add_dependencies(gl_backend${GL_FLAVOR} gl_backend-shader-resources)
-  add_dependencies(gl_backend${GL_FLAVOR} N${GL_FLAVOR})
+  # Building gl_blackend{GL,GLES} requires the generated ngl_{gl,gles}.hpp header file to be built.
+  # And that happens in the ngl_{GL,GLES} target.
+  add_dependencies(gl_backend${GL_FLAVOR} ngl_${GL_FLAVOR})
   target_compile_definitions(gl_backend${GL_FLAVOR} PUBLIC ${FASTUIDRAW${GL_FLAVOR}_COMPILE_DEFINES_DEBUG})
   mark_private_sources_as_private(gl_backend${GL_FLAVOR})
   target_include_directories(gl_backend${GL_FLAVOR} PUBLIC ../../../inc)
