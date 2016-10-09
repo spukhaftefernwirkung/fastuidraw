@@ -18,7 +18,4 @@ add_library(painter OBJECT ${SOURCES})
 target_compile_definitions(painter PUBLIC ${FASTUIDRAW_COMPILE_DEFINITIONS})
 mark_private_sources_as_private(painter)
 target_include_directories(painter PUBLIC ../../../inc)
-if(${BUILD_SHARED_LIBS})
-  set_target_properties(painter PROPERTIES POSITION_INDEPENDENT_CODE ON)
-endif()
-
+set_target_properties(painter PROPERTIES POSITION_INDEPENDENT_CODE ON)

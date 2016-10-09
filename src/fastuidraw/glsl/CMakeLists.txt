@@ -14,7 +14,4 @@ add_dependencies(glsl glsl-shader-resources)
 target_compile_definitions(glsl PUBLIC ${FASTUIDRAW_COMPILE_DEFINITIONS})
 mark_private_sources_as_private(glsl)
 target_include_directories(glsl PUBLIC ../../../inc)
-if(${BUILD_SHARED_LIBS})
-  set_target_properties(glsl PROPERTIES POSITION_INDEPENDENT_CODE ON)
-endif()
-
+set_target_properties(glsl PROPERTIES POSITION_INDEPENDENT_CODE ON)

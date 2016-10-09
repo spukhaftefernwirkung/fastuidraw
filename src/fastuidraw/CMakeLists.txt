@@ -42,7 +42,7 @@ foreach(SUBDIR util text painter glsl)
   list(APPEND PUBLIC_INCLUDE_DIRS $<TARGET_PROPERTY:${SUBDIR},INTERFACE_INCLUDE_DIRECTORIES>)
 endforeach()
 
-add_library(FastUIDraw ${SOURCES})
+add_library(FastUIDraw SHARED ${SOURCES})
 target_compile_definitions(FastUIDraw PUBLIC ${FASTUIDRAW_COMPILE_DEFINITIONS})
 mark_private_sources_as_private(FastUIDraw)
 target_include_directories(FastUIDraw PUBLIC ${PUBLIC_INCLUDE_DIRS})
@@ -52,7 +52,7 @@ target_link_libraries(FastUIDraw PUBLIC ${FREETYPE_LIBRARIES} Boost::boost PRIVA
 # NGL(ES) library.
 add_subdirectory(gl_backend)
 foreach(GL_FLAVOR ${GL_FLAVORS_TO_BUILD})
-  add_library(FastUIDraw${GL_FLAVOR} $<TARGET_OBJECTS:gl_backend${GL_FLAVOR}>)
+  add_library(FastUIDraw${GL_FLAVOR} SHARED $<TARGET_OBJECTS:gl_backend${GL_FLAVOR}>)
   target_compile_definitions(FastUIDraw${GL_FLAVOR} PUBLIC ${FASTUIDRAW${GL_FLAVOR}_COMPILE_DEFINITIONS})    
   target_link_libraries(FastUIDraw${GL_FLAVOR} PUBLIC N${GL_FLAVOR} FastUIDraw)
 endforeach()

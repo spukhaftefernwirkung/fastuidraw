@@ -15,7 +15,4 @@ add_library(text OBJECT ${SOURCES})
 target_compile_definitions(text PUBLIC ${FASTUIDRAW_COMPILE_DEFINITIONS})
 target_include_directories(text PUBLIC ../../../inc ${FREETYPE_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 mark_private_sources_as_private(text)
-if(${BUILD_SHARED_LIBS})
-  set_target_properties(text PROPERTIES POSITION_INDEPENDENT_CODE ON)
-endif()
-
+set_target_properties(text PROPERTIES POSITION_INDEPENDENT_CODE ON)

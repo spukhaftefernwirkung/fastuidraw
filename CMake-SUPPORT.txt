@@ -1,13 +1,12 @@
 - Create build directory, e.g. in the same parent directory as the fastuidraw sources directory.
 - Run CMake:
 
-    $ cmake -G Ninja -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_BUILD_TYPE:STRING=Debug -DBUILD_GL:BOOL=ON -DBUILD_GLES:BOOL=OFF -DBUILD_DEMOS:BOOL=ON ../fastuidraw
+    $ cmake -G Ninja -DCMAKE_BUILD_TYPE:STRING=Debug -DBUILD_GL:BOOL=ON -DBUILD_GLES:BOOL=OFF -DBUILD_DEMOS:BOOL=ON ../fastuidraw
 
   Other CMake generators than Ninja should work as well.
   If you get an error on CMP0004 policy when using SDL2: cfr. https://bugzilla.libsdl.org/show_bug.cgi?id=3295
 
   Standard CMake variables:
-    - BUILD_SHARED_LIBS : ON -> shared libraries will be built, OFF -> static libraries will be built.
     - CMAKE_BUILD_TYPE : Debug -> debug build; Release -> release build; other possible values: see CMake documentation.
   FastUIDraw CMake variables:
     - BUILD_DEMOS : Build the supplied demos (default: OFF).

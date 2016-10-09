@@ -32,7 +32,7 @@ foreach(GL_FLAVOR ${GL_FLAVORS_TO_BUILD})
   add_custom_target(ngl_${GL_FLAVOR} DEPENDS ${NGL_${GL_FLAVOR}_CPP} ${NGL_${GL_FLAVOR}_HPP})
 
   # NGL/NGLES library:
-  add_library(N${GL_FLAVOR} ../gl_binding.cpp ${NGL_${GL_FLAVOR}_CPP})
+  add_library(N${GL_FLAVOR} SHARED ../gl_binding.cpp ${NGL_${GL_FLAVOR}_CPP})
   target_compile_definitions(N${GL_FLAVOR} PUBLIC $<$<CONFIG:Debug>:GL_DEBUG>)
   add_dependencies(N${GL_FLAVOR} ngl_${GL_FLAVOR})
   target_include_directories(N${GL_FLAVOR} PUBLIC ../../../../inc)

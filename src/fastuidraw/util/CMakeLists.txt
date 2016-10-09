@@ -6,7 +6,4 @@ add_library(util OBJECT ${SOURCES})
 target_compile_definitions(util PUBLIC ${FASTUIDRAW_COMPILE_DEFINITIONS})
 mark_private_sources_as_private(util)
 target_include_directories(util PUBLIC ../../../inc)
-if(${BUILD_SHARED_LIBS})
-  set_target_properties(util PROPERTIES POSITION_INDEPENDENT_CODE ON)
-endif()
-
+set_target_properties(util PROPERTIES POSITION_INDEPENDENT_CODE ON)
