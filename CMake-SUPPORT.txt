@@ -2,7 +2,7 @@
 - Run CMake:
 
     $ cd builddir
-    $ cmake -G Ninja -DCMAKE_BUILD_TYPE:STRING=Debug -DBUILD_GL:BOOL=ON -DBUILD_GLES:BOOL=OFF -DBUILD_DEMOS:BOOL=ON ../fastuidraw
+    $ cmake -G Ninja -DCMAKE_BUILD_TYPE:STRING=Debug -DGLBACKEND_DOWNLOAD_HEADERS:BOOL=OFF -DBUILD_GL:BOOL=ON -DBUILD_GLES:BOOL=OFF -DBUILD_DEMOS:BOOL=ON ../fastuidraw
 
   Other CMake generators than Ninja (like make) should work as well.
   If you get an error on CMP0004 policy when using SDL2: cfr. https://bugzilla.libsdl.org/show_bug.cgi?id=3295
@@ -10,9 +10,11 @@
   Standard CMake variables:
     - CMAKE_BUILD_TYPE : Debug -> debug build; Release -> release build; other possible values: see CMake documentation.
   FastUIDraw CMake variables:
-    - BUILD_DEMOS : Build the supplied demos (default: OFF).
-    - BUILD_GL : Build the GL backend (default: ON).
-    - BUILD_GLES : Build the GLES backend (default: OFF).
+    - BUILD_DEMOS (ON/OFF) : Build the supplied demos (default: OFF).
+    - GLBACKEND_DOWNLOAD_HEADERS (ON/OFF) : Download the required GL(ES) header files from the
+      OpenGL/Khronos website(s).  Otherwise use the system include directory (default: OFF).
+    - BUILD_GL (ON/OFF) : Build the GL backend (default: ON).
+    - BUILD_GLES (ON/OFF) : Build the GLES backend (default: OFF).
     Both backends can be enabled.
 - Build:
     $ ninja
