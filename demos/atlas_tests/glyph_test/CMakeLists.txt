@@ -11,6 +11,6 @@ foreach(GL_FLAVOR ${GL_FLAVORS_TO_BUILD})
   add_executable(glyph-test-${GL_FLAVOR} main.cpp ${SHARER_RESOURCES_CPP})
   add_dependencies(glyph-test-${GL_FLAVOR} glyph-test-shader-resources)
   target_include_directories(glyph-test-${GL_FLAVOR} PRIVATE ${SDL2_INCLUDE_DIRS})
-  target_link_libraries(glyph-test-${GL_FLAVOR} PRIVATE demos-common FastUIDraw FastUIDraw${GL_FLAVOR} ${SDL2_LIBRARIES})
+  target_link_libraries(glyph-test-${GL_FLAVOR} PRIVATE demos-common${GL_FLAVOR} FastUIDraw FastUIDraw${GL_FLAVOR} ${SDL2_LIBRARIES})
 endforeach()
 
