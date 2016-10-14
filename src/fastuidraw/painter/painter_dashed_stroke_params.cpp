@@ -17,8 +17,7 @@
  */
 
 #include <fastuidraw/painter/painter_dashed_stroke_params.hpp>
-#include <fastuidraw/painter/painter_attribute_data_filler_path_stroked.hpp>
-#include <fastuidraw/stroked_path.hpp>
+#include <fastuidraw/painter/stroked_path.hpp>
 #include <fastuidraw/util/pixel_distance_math.hpp>
 #include "../private/util_private.hpp"
 
@@ -70,14 +69,14 @@ namespace
     unsigned int
     number_joins(const fastuidraw::PainterAttributeData &data, bool edge_closed) const
     {
-      return fastuidraw::PainterAttributeDataFillerPathJoins::number_joins(data, edge_closed);
+      return fastuidraw::StrokedPath::number_joins(data, edge_closed);
     }
 
     virtual
     unsigned int
     named_join_chunk(unsigned int J) const
     {
-      return fastuidraw::PainterAttributeDataFillerPathJoins::named_join_chunk(J);
+      return fastuidraw::StrokedPath::chunk_for_named_join(J);
     }
 
     static
@@ -87,7 +86,83 @@ namespace
 
     bool m_pixel_width_stroking;
   };
+
+  class StrokingDataSelector:public fastuidraw::StrokingDataSelectorBase
+  {
+  public:
+    explicit
+    StrokingDataSelector(bool pixel_width);
+
+    virtual
+    float
+    compute_rounded_thresh(const fastuidraw::PainterShaderData::DataBase *data,
+                           float thresh) const;
+    void
+    stroking_distances(const fastuidraw::PainterShaderData::DataBase *data,
+                       float *out_pixel_distance,
+                       float *out_item_space_distance) const;
+
+  private:
+    bool m_pixel_width;
+  };
 }
+
+////////////////////////////////
+// StrokingDataSelector methods
+StrokingDataSelector::
+StrokingDataSelector(bool pixel_width):
+  m_pixel_width(pixel_width)
+{}
+
+float
+StrokingDataSelector::
+compute_rounded_thresh(const fastuidraw::PainterShaderData::DataBase *data,
+                       float thresh) const
+{
+  const PainterDashedStrokeParamsData *d;
+  d = static_cast<const PainterDashedStrokeParamsData*>(data);
+
+  if(d->m_radius <= 0.0f)
+    {
+      /* Not really stroking, just select a LARGE value
+         to get a very low level of detail.
+       */
+      return 10000.0f;
+    }
+  else
+    {
+      float return_value;
+
+      return_value = 1.0f / d->m_radius;
+      if(!m_pixel_width)
+        {
+          return_value *= thresh;
+        }
+      return return_value;
+    }
+}
+
+void
+StrokingDataSelector::
+stroking_distances(const fastuidraw::PainterShaderData::DataBase *data,
+                   float *out_pixel_distance,
+                   float *out_item_space_distance) const
+{
+  const PainterDashedStrokeParamsData *d;
+  d = static_cast<const PainterDashedStrokeParamsData*>(data);
+
+  if(m_pixel_width)
+    {
+      *out_pixel_distance = d->m_radius;
+      *out_item_space_distance = 0.0f;
+    }
+  else
+    {
+      *out_pixel_distance = 0.0f;
+      *out_item_space_distance = d->m_radius;
+    }
+}
+
 //////////////////////////////////////
 // PainterDashedStrokeParamsData methods
 PainterDashedStrokeParamsData::
@@ -392,4 +467,11 @@ fastuidraw::PainterDashedStrokeParams::
 dash_evaluator(bool pixel_width_stroking)
 {
   return FASTUIDRAWnew DashEvaluator(pixel_width_stroking);
+}
+
+fastuidraw::reference_counted_ptr<const fastuidraw::StrokingDataSelectorBase>
+fastuidraw::PainterDashedStrokeParams::
+stroking_data_selector(bool pixel_width_stroking)
+{
+  return FASTUIDRAWnew StrokingDataSelector(pixel_width_stroking);
 }
