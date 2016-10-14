@@ -45,7 +45,7 @@ endforeach()
 add_library(FastUIDraw SHARED ${SOURCES})
 target_compile_definitions(FastUIDraw PUBLIC ${FASTUIDRAW_COMPILE_DEFINITIONS})
 mark_private_sources_as_private(FastUIDraw)
-target_include_directories(FastUIDraw PUBLIC ${PUBLIC_INCLUDE_DIRS})
+target_include_directories(FastUIDraw PUBLIC ${PUBLIC_INCLUDE_DIRS} ../../inc)
 target_link_libraries(FastUIDraw PUBLIC ${FREETYPE_LIBRARIES} Boost::boost PRIVATE Boost::thread)
 
 # FastUIDrawGL(ES) library is made of sources in gl_backend subdirectory and uses the

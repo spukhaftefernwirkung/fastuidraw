@@ -13,6 +13,6 @@ set(SOURCES glyph_atlas.cpp
 	)
 add_library(text OBJECT ${SOURCES})
 target_compile_definitions(text PUBLIC ${FASTUIDRAW_COMPILE_DEFINITIONS})
-target_include_directories(text PUBLIC ../../../inc ${FREETYPE_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+target_include_directories(text PUBLIC ${FREETYPE_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} PRIVATE ../../../inc)
 mark_private_sources_as_private(text)
 set_target_properties(text PROPERTIES POSITION_INDEPENDENT_CODE ON)
