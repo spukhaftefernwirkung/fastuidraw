@@ -30,9 +30,9 @@ endfunction()
 #   - Set of own sources (current directory & private subdirectory).
 #   - glu-tess
 #   - Sources in util, text, painter and glsl subdirectory (and their private subdirectories if available).
-set(SOURCES image.cpp colorstop.cpp colorstop_atlas.cpp path.cpp tessellated_path.cpp stroked_path.cpp filled_path.cpp
+set(SOURCES image.cpp colorstop.cpp colorstop_atlas.cpp path.cpp tessellated_path.cpp
 	# Private sources:
-	private/interval_allocator.cpp private/path_util_private.cpp
+	private/interval_allocator.cpp private/path_util_private.cpp private/clip.cpp
 	)
 list(APPEND SOURCES $<TARGET_OBJECTS:glu-tess>)
 set(PUBLIC_INCLUDE_DIRS $<TARGET_PROPERTY:glu-tess,INTERFACE_INCLUDE_DIRECTORIES>)
