@@ -22,6 +22,7 @@
     $ cmake --build .
 - Demo executables (when built) and shared libraries are placed in subdirectory 'bin' of the build directory,
   ready to run.
+- There is a target 'docs' to build HTML Doxygen generated documentation at docs/doxy/html.
 
 When adding/removing *.resource_string files, run an explicit "cmake ." first before building.  The reason is that
 we use file(GLOB) to locate those files and there is no dependency tracking for that.  An alternative is to explicitly

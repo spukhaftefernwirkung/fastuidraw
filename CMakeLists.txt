@@ -22,6 +22,7 @@ endif()
 
 add_subdirectory(shell_scripts)
 add_subdirectory(src/fastuidraw)
+add_subdirectory(docs)
 if(BUILD_DEMOS)
   add_subdirectory(demos/common)
   add_subdirectory(demos/atlas_tests/glyph_test)
